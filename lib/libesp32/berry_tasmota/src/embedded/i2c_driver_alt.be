@@ -6,16 +6,16 @@
  -------------------------------------------------------------#
 
 #-------------------------------------------------------------
- - I2C_Driver class to simplify development of I2C drivers
+ - I2C_Driver_Alt class to simplify development of I2C drivers
  -
- - I2C_Driver(name, addr [, i2c_index]) -> nil
+ - I2C_Driver_Alt(name, addr [, i2c_index]) -> nil
  -   name: name of I2C device for logging, or function to detect the model
  -   addr: I2C address of device, will probe all I2C buses for it
  -   i2c_index: (optional) check is the device is not disabled
  -------------------------------------------------------------#
  
-#@ solidify:I2C_Driver
-class I2C_Driver
+#@ solidify:I2C_Driver_Alt
+class I2C_Driver_Alt
   var wire          #- wire object to reach the device, if nil then the module is not initialized -#
   var addr          #- I2C address of the device -#
   var name          #- model namme of the device, cannot be nil -#
@@ -31,7 +31,7 @@ class I2C_Driver
    --#
   def init(name_or_detect, addr, i2c_index)
     #- check if the i2c index is disabled by Tasmota configuration -#
-                                                                                                          #if i2c_index != nil && !tasmota.i2c_enabled(i2c_index) return end
+    #if i2c_index != nil && !tasmota.i2c_enabled(i2c_index) return end
 
     self.addr = addr                            #- address for AXP192 -#
     self.wire = tasmota.wire_scan(self.addr)    #- get the right I2C bus -#
@@ -180,13 +180,13 @@ class I2C_Driver
     var h6 = self.read8(high_reg)
     var l8 = self.read8(low_reg)
     if h6 == -1 || l8 == -1 return 0 end
-    return ((h6 & 0x3F) << 8) | l8
+    return ((h6 & 0x3F) << 8 | l8)
   end
 
 end
 
 #- Example
 
-d = I2C_Driver("MPU", 0x68, 58)
+d = I2C_Driver_Alt("MPU", 0x68, 58)
 
 -#

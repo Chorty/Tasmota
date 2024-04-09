@@ -8,3 +8,5 @@
  * 
  *******************************************************************/
 #include "solidify/solidified_i2c_driver.h"
+#include "solidify/solidified_i2c_driver_alt.h"
+

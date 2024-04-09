@@ -205,8 +205,10 @@ be_extern_native_class(tasmota_log_reader);
 be_extern_native_class(light_state);
 be_extern_native_class(Wire);
 be_extern_native_class(I2C_Driver);
+be_extern_native_class(I2C_Driver_Alt);
 be_extern_native_class(AXP192);
 be_extern_native_class(AXP202);
+be_extern_native_class(AXP2101);
 be_extern_native_class(OneWire);
 be_extern_native_class(Leds_ntv);
 be_extern_native_class(Leds);
@@ -262,8 +264,10 @@ BERRY_LOCAL bclass_array be_class_table = {
 #ifdef USE_I2C
     &be_native_class(Wire),
     &be_native_class(I2C_Driver),
+    &be_native_class(I2C_Driver_Alt),
     &be_native_class(AXP192),
     &be_native_class(AXP202),
+    &be_native_class(AXP2101),
 #endif // USE_I2C
     &be_native_class(md5),
 #ifdef USE_WEBCLIENT

@@ -3,3 +3,4 @@
  *******************************************************************/
 #include "solidify/solidified_i2c_axp192.h"
 #include "solidify/solidified_i2c_axp202.h"
+#include "solidify/solidified_i2c_axp2101.h"

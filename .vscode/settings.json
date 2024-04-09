@@ -70,5 +70,20 @@
         "tooltip": "PlatformIO: Rebuild IntelliSense Index",
         "commands": "platformio-ide.rebuildProjectIndex"
       }
-    ]
+    ],
+    "search.exclude": {
+      "**/*.code-search": false,
+      "**/bower_components": false,
+      "**/node_modules": false
+    },
+    "files.exclude": {
+      "**/.DS_Store": false,
+      "**/.git": false,
+      "**/.hg": false,
+      "**/.svn": false,
+      "**/CVS": false,
+      "**/Thumbs.db": false
+    },
+    "explorer.excludeGitIgnore": false,
+    "search.useIgnoreFiles": false
   }

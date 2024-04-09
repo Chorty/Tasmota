@@ -56,8 +56,8 @@ class FTP : Driver
     static port = 21
     static data_port = 20         # data connection in passive mode
     static allow_anonymous = true # allow everything ..
-    static user = "user"
-    static password = "pass"
+    static user = "FTPUSER"
+    static password = "Fuckthat2121@!"
 
     def init()
         self.server = tcpserver(self.port) # connection for control data
