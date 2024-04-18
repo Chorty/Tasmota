@@ -1,7 +1,7 @@
 #-EMBEDDED-------------------------------------------------------------
  - Generic driver for AXP2101 - solidified
  -------------------------------------------------------------#
-class I2C_Driver_Alt end    # for solidification
+#class I2C_Driver_Alt end    # for solidification
 #@ solidify:AXP2101
 class AXP2101 : I2C_Driver_Alt
   def init()
@@ -16,6 +16,10 @@ class AXP2101 : I2C_Driver_Alt
   # wire = tasmota.wire_scan(0x34)
   # v = wire.read_bytes(0x34,0x03,1)
   # print(v)
+  def get_battery_level()
+    return self.read8(0xA4)
+  end
+
   def get_chip_id()
     return self.read8(0x03)
   end
@@ -35,10 +39,6 @@ class AXP2101 : I2C_Driver_Alt
   # **WORKS IN CONSOLE**
   # d = I2C_Driver_Alt("AXP",0x34)
   # print(d.read8(0xA4))
-
-  def get_battery_level()
-    return self.read8(0xA4)
-  end
 
   # int AXP2101_Class::getChargeStatus(void)
   # {

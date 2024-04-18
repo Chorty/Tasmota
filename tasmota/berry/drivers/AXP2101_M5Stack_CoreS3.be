@@ -1,3 +1,4 @@
+import i2c_driver_alt.be
 #-------------------------------------------------------------
  - Specialized driver for AXP2101 of M5Stack CoreS3
  - source is from: https://github.com/Xinyuan-LilyGO/TTGO_TWatch_Library/blob/master/src/TTGO.cpp
@@ -12,7 +13,7 @@ class AXP2101_M5Stack_CoreS3 : AXP2101
 
       # # Turn off the charging led
       # # power->setChgLEDMode(AXP20X_LED_OFF);
-      self.get_chip_id(0)
+      self.get_chip_id()
 
       # # // Turn off external enable
       # # power->setPowerOutPut(AXP2101_EXTEN, false);

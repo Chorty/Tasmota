@@ -132,7 +132,16 @@ class I2C_Driver
     var buf = self.wire.read_bytes(self.addr, reg, 4)
     return (buf[0] << 24) + (buf[1] << 16) + (buf[2] << 8) + buf[3]
   end
-
+  def i2c_valid_read16(data, addr, reg, bus = 0)
+    var status = self.i2c_valid_read(addr, reg, 2, bus)
+    data = self.i2c_buffer.to_integer()
+    return status
+  end
+# bool I2cValidRead16(uint16_t *data, uint8_t addr, uint8_t reg, uint8_t bus = 0) {
+#   bool status = I2cValidRead(addr, reg, 2, bus);
+#   *data = (uint16_t)i2c_buffer;
+#   return status;
+# }
   def readH5L8(reg)
     var buf = self.wire.read_bytes(self.addr, reg, 4)
     return (buf[0] << 24) + (buf[1] << 16) + (buf[2] << 8) + buf[3]
