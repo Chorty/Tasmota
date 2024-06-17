@@ -3,11 +3,59 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] - Development
 
-## [14.0.0.4]
+## [14.1.0.2]
 ### Added
-- SML FastExit for binary SML parsing (#21497)
+- Support for Sonoff WTS01 temperature sensor using SerialBridge in ``SSerialMode 3``
+- Berry `classof` extended to class methods (#21615)
+- Extend command ``SetOption147 1`` to disable publish of IRReceived MQTT messages (#21574)
+- Matter support for Rain sensor (#21633)
+- Matter add internal debug option (#21634)
+- Matter add Fan support (virtual only) (#21637)
 
 ### Breaking Changed
+
+### Changed
+- SerialBridge command ``SSerialSend9`` replaced by ``SSerialMode``
+- SML replace vars in descriptor and line (#21622)
+- NeoPool using temperature as only frequently changing value for NPTeleperiod (#21628)
+- NeoPool make compiler setting available by user_config_override.h
+
+### Fixed
+- Matter interverted attributes 0xFFF9 and 0xFFFB (#21636)
+- Matter CASE Sigma1 resumption mode for faster reconnection
+
+### Removed
+
+## [14.1.0.1] 20240611
+### Added
+- Berry solidification of `bytes` instances (#21558)
+- Matter support for Air Quality sensors (#21559)
+- Matter support for bridged Air Quality (#21597)
+- HASPmota rounds to nearest int values passed as 'real' (#21599)
+- Berry automatic rounding of float to int when calling C mapped functions (#21601)
+- Berry add `math.round` (#21602)
+- Support for QMP6988 temperature and pressure sensor
+
+### Changed
+- Matter refactoring of bridged devices (#21575)
+- ESP32 Core3 platform update from 2024.05.13 to 2024.06.10 (#21569)
+- Optional MQTT_TELE_RETAIN to Energy Margins message replaced by ``SensorRetain``
+- Matter filter suffix automatically added for sensors (#21589)
+- Display timing splash screen with display modes 1 to 5
+- ESP32 MI32 refactoring, bugfixes, generic device scanning (#21603)
+- Allow receive or send using SerialBridge
+
+### Fixed
+- Berry `input()` returns empty string and does not crash (#21565)
+
+## [Released]
+
+## [14.1.0] 20240603
+- Release Rachel
+
+## [14.0.0.4] 20240603
+### Added
+- SML FastExit for binary SML parsing (#21497)
 
 ### Changed
 - GPIOViewer from v1.5.3 to v1.5.4 (No functional change)
@@ -75,8 +123,6 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 - Support of old insecure fingerprint algorithm. Deprecated since v8.4.0 (#21417)
-
-## [Released]
 
 ## [14.0.0] 20240515
 - Release Rodney

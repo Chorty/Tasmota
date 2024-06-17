@@ -483,6 +483,7 @@ int8_t cs;
     color_type = renderer->color_type();
 
     renderer->DisplayInit(DISPLAY_INIT_MODE, Settings->display_size, inirot, Settings->display_font);
+    renderer->clearDisplay();
 
     Settings->display_width = renderer->width();
     Settings->display_height = renderer->height();
@@ -504,7 +505,7 @@ int8_t cs;
     ApplyDisplayDimmer();
 
 #ifdef SHOW_SPLASH
-    if (!Settings->flag5.display_no_splash) {
+    if (!Settings->flag5.display_no_splash) {  // SetOption135 - (Display & LVGL) force disabling default splash screen
       renderer->Splash();
     }
 #endif // SHOW_SPLASH
@@ -549,10 +550,10 @@ void UDISP_PrintLog(void)
     if (!disp_screen_buffer_cols) { DisplayAllocScreenBuffer(); }
 
     char* txt = DisplayLogBuffer('\370');
-    if (txt != NULL) {
+    if (txt != nullptr) {
       uint8_t last_row = Settings->display_rows -1;
 
-      renderer->clearDisplay();
+//      renderer->clearDisplay();
       renderer->setTextSize(Settings->display_size);
       renderer->setCursor(0,0);
       for (byte i = 0; i < last_row; i++) {
@@ -561,9 +562,6 @@ void UDISP_PrintLog(void)
       }
       strlcpy(disp_screen_buffer[last_row], txt, disp_screen_buffer_cols);
       DisplayFillScreen(last_row);
-
-      AddLog(LOG_LEVEL_DEBUG, PSTR(D_LOG_DEBUG "[%s]"), disp_screen_buffer[last_row]);
-
       renderer->println(disp_screen_buffer[last_row]);
       renderer->Updateframe();
     }
@@ -574,7 +572,7 @@ void UDISP_Time(void)
 {
   char line[12];
 
-  renderer->clearDisplay();
+//  renderer->clearDisplay();
   renderer->setTextSize(Settings->display_size);
   renderer->setTextFont(Settings->display_font);
   renderer->setCursor(0, 0);
