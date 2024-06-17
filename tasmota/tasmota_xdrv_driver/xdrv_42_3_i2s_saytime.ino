@@ -17,6 +17,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #if (defined(USE_I2S_AUDIO) || defined(ESP32S3_BOX))
 #ifdef USE_I2S_SAY_TIME
 long timezone = 2;

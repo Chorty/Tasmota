@@ -21,7 +21,7 @@
 #ifdef ESP32
 #ifdef ESP32S3_BOX
 #include <driver/i2s.h>
-#include <es8156.h>
+// #include <es8156.h>
 #include <es8311.h>
 #include <es7243e.h>
 #include <es7210.h>
@@ -34,22 +34,22 @@ void S3boxAudioPower(uint8_t pwr) {
 }
 
 // box lite dac init
-uint32_t ES8156_init() {
-  uint32_t ret_val = ESP_OK;
+// uint32_t ES8156_init() {
+//   uint32_t ret_val = ESP_OK;
 
-  if (I2cSetDevice(ES8156_ADDR, 1)) {
-    I2cSetActiveFound(ES8156_ADDR, "ES8156-I2C", 1);
-    audio_hal_codec_config_t cfg = {
-       .i2s_iface = {
-         .mode = AUDIO_HAL_MODE_SLAVE,
-         .bits = AUDIO_HAL_BIT_LENGTH_16BITS,
-       }
-    };
-    ret_val |= es8156_codec_init(&Wire1, &cfg);
-    ret_val |= es8156_codec_set_voice_volume(75);
-  }
-  return ret_val;
-}
+//   if (I2cSetDevice(ES8156_ADDR, 1)) {
+//     I2cSetActiveFound(ES8156_ADDR, "ES8156-I2C", 1);
+//     audio_hal_codec_config_t cfg = {
+//        .i2s_iface = {
+//          .mode = AUDIO_HAL_MODE_SLAVE,
+//          .bits = AUDIO_HAL_BIT_LENGTH_16BITS,
+//        }
+//     };
+//     ret_val |= es8156_codec_init(&Wire1, &cfg);
+//     ret_val |= es8156_codec_set_voice_volume(75);
+//   }
+//   return ret_val;
+// }
 
 // box lite adc init
 uint32_t es7243e_init() {
@@ -126,7 +126,7 @@ uint32_t ES8311_init() {
 void S3boxInit(void) {
   if (TasmotaGlobal.i2c_enabled_2) {
     // box lite
-    ES8156_init();
+    // ES8156_init();
     es7243e_init();
     // box full
     ES8311_init();

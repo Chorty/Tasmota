@@ -70,5 +70,7 @@
         "tooltip": "PlatformIO: Rebuild IntelliSense Index",
         "commands": "platformio-ide.rebuildProjectIndex"
       }
-    ]
+    ],
+    "idf.port": "/dev/ttyUSB0",
+    "terminal.integrated.scrollback": 100000
   }
