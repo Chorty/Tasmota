@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - Matter support for Rain sensor (#21633)
 - Matter add internal debug option (#21634)
 - Matter add Fan support (virtual only) (#21637)
+- Matter show event name in logs (#21649)
+- Matter full support of events
 
 ### Breaking Changed
 
@@ -18,11 +20,22 @@ All notable changes to this project will be documented in this file.
 - SerialBridge command ``SSerialSend9`` replaced by ``SSerialMode``
 - SML replace vars in descriptor and line (#21622)
 - NeoPool using temperature as only frequently changing value for NPTeleperiod (#21628)
-- NeoPool make compiler setting available by user_config_override.h
+- NeoPool make compiler setting available by `user_config_override.h` (#21645)
+- ESP32 MI32 improve parser (#21648)
+- ESP8266 platform update from 2024.01.01 to 2024.06.00 (#21668)
+- ESP8266 Framework (Arduino Core) from v2.7.6 to v2.7.7 (#21668)
+- Matter refactor reading of multiple attributes to reduce memory pressure (#21675)
+- ESP32 platform update from 2024.06.10 to 2024.06.11 (#21694)
+- ESP32 Framework (Arduino Core) from v3.0.1 to v3.0.2 (#21694)
 
 ### Fixed
 - Matter interverted attributes 0xFFF9 and 0xFFFB (#21636)
-- Matter CASE Sigma1 resumption mode for faster reconnection
+- Matter CASE Sigma1 resumption mode for faster reconnection (#21644)
+- Shutter MQTT on inverted shutter (#21663)
+- Scripter TCP server (#21660)
+- Matter TLV.U8 unsigned encoding (#21672)
+- Matter resumption final ack (#21673)
+- ESP32 allow use of UART0 with enabled USB_CDC_CONSOLE (#21496)
 
 ### Removed
 
