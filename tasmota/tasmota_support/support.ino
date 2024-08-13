@@ -590,12 +590,17 @@ char* SetStr(const char* str) {
   return new_str;
 }
 
-bool StrCaseStr_P(const char* source, const char* search) {
+char* StrCaseStr_P(const char* source, const char* search) {
   char case_source[strlen_P(source) +1];
   UpperCase_P(case_source, source);
   char case_search[strlen_P(search) +1];
   UpperCase_P(case_search, search);
-  return (strstr(case_source, case_search) != nullptr);
+  char *cp = strstr(case_source, case_search);
+  if (cp) {
+    uint32_t offset = cp - case_source;
+    cp = (char*)source + offset;
+  }
+  return cp;
 }
 
 bool IsNumeric(const char* value) {
@@ -1411,6 +1416,49 @@ bool ResponseContains_P(const char* needle) {
   return (strstr_P(ResponseData(), needle) != nullptr);
 }
 
+bool GetNextSensor(void) {
+  static uint32_t start_time = 0;
+  static uint8_t sensor_set = 0;
+
+  ResponseClear();
+  int tele_period_save = TasmotaGlobal.tele_period;
+  TasmotaGlobal.tele_period = 2;                     // Do not allow HA updates during next function call
+  while (!ResponseLength()) {
+    if (0 == sensor_set) {
+      if (TimeReached(start_time)) {
+        SetNextTimeInterval(start_time, 1000);
+        sensor_set++;                                // Minimal loop time is 1 second
+      }
+      break;
+    }
+    else if (1 == sensor_set) {
+      if (!XsnsCallNextJsonAppend()) {               // ,"INA219":{"Voltage":4.494,"Current":0.020,"Power":0.089}
+        sensor_set++;                                // Looped
+        break;
+      }
+    }
+    else {
+      if (!XdrvCallNextJsonAppend()) {               // ,"INA219":{"Voltage":4.494,"Current":0.020,"Power":0.089}
+        sensor_set = 0;                              // Looped
+        break;
+      }
+    }
+  }
+
+//  AddLog(LOG_LEVEL_DEBUG_MORE, PSTR("DBG: GetNextSensor %d, %d"), sensor_set, ResponseLength());
+
+  TasmotaGlobal.tele_period = tele_period_save;
+  if (ResponseLength()) {
+    ResponseJsonStart();                             // {"INA219":{"Voltage":4.494,"Current":0.020,"Power":0.089}}
+    ResponseJsonEnd();
+
+//    AddLog(LOG_LEVEL_DEBUG_MORE, PSTR("DBG: GetNextSensor %d, '%s'"), sensor_set, ResponseData());
+
+    return true;
+  }
+  return false;
+}
+
 /*********************************************************************************************\
  * GPIO Module and Template management
 \*********************************************************************************************/
@@ -1534,16 +1582,7 @@ bool ValidModule(uint32_t index)
 }
 
 bool ValidTemplate(const char *search) {
-/*
-  char template_name[strlen(SettingsText(SET_TEMPLATE_NAME)) +1];
-  char search_name[strlen(search) +1];
-
-  LowerCase(template_name, SettingsText(SET_TEMPLATE_NAME));
-  LowerCase(search_name, search);
-
-  return (strstr(template_name, search_name) != nullptr);
-*/
-  return StrCaseStr_P(SettingsText(SET_TEMPLATE_NAME), search);
+  return (StrCaseStr_P(SettingsText(SET_TEMPLATE_NAME), search) != nullptr);
 }
 
 String AnyModuleName(uint32_t index)
@@ -1783,6 +1822,7 @@ bool ValidGPIO(uint32_t pin, uint32_t gpio) {
 #endif
   return (GPIO_USER == ValidPin(pin, BGPIO(gpio)));  // Only allow GPIO_USER pins
 }
+
 
 bool ValidSpiPinUsed(uint32_t gpio) {
   // ESP8266: If SPI pin selected chk if it's not one of the three Hardware SPI pins (12..14)
@@ -2063,7 +2103,14 @@ uint32_t ConvertSerialConfig(uint8_t serial_config) {
 //}
 //#else
 uint32_t GetSerialBaudrate(void) {
-  return (Serial.baudRate() / 300) * 300;  // Fix ESP32 strange results like 115201
+//  return (Serial.baudRate() / 300) * 300;  // Fix ESP32 strange results like 115201
+// Since core 3.0.4 the returned baudrate could even be 115942 instead of 115200 !!!
+  uint32_t margin = 300;
+  uint32_t baudrate = Serial.baudRate();
+  if (baudrate > 10000) {
+    margin = 2400;
+  }
+  return (baudrate / margin) * margin;  // Fix ESP32 strange results like 115201
 }
 //#endif
 
@@ -2651,38 +2698,6 @@ void AddLogSerial() {
 void AddLogMissed(const char *sensor, uint32_t misses)
 {
   AddLog(LOG_LEVEL_DEBUG, PSTR("SNS: %s missed %d"), sensor, SENSOR_MAX_MISS - misses);
-}
-
-void AddLogSpi(uint32_t hardware, int clk, int mosi, int miso) {
-  uint32_t enabled = TasmotaGlobal.soft_spi_enabled;
-  char hwswbus[8];
-  if (hardware) {
-#ifdef ESP8266
-    strcpy_P(hwswbus, PSTR("Hard"));
-    enabled = TasmotaGlobal.spi_enabled;
-#endif      
-#ifdef ESP32
-    strcpy_P(hwswbus, PSTR("Bus0"));
-    hwswbus[3] += (char)hardware;
-    enabled = (1 == hardware) ? TasmotaGlobal.spi_enabled : TasmotaGlobal.spi_enabled2;
-#endif
-  } else {
-    strcpy_P(hwswbus, PSTR("Soft"));
-  }
-  switch(enabled) {
-    case SPI_MOSI:
-      AddLog(LOG_LEVEL_INFO, PSTR("SPI: %s using GPIO%02d(CLK) and GPIO%02d(MOSI)"),
-        hwswbus, clk, mosi);
-      break;
-    case SPI_MISO:
-      AddLog(LOG_LEVEL_INFO, PSTR("SPI: %s using GPIO%02d(CLK) and GPIO%02d(MISO)"),
-        hwswbus, clk, miso);
-      break;
-    case SPI_MOSI_MISO:
-      AddLog(LOG_LEVEL_INFO, PSTR("SPI: %s using GPIO%02d(CLK), GPIO%02d(MOSI) and GPIO%02d(MISO)"),
-        hwswbus, clk, mosi, miso);
-      break;
-  }
 }
 
 /*********************************************************************************************\
