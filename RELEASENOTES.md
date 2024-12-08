@@ -133,6 +133,7 @@ The latter links can be used for OTA upgrades too like ``OtaUrl https://ota.tasm
 - Support for US AQI and EPA AQI in PMS5003x sensors [#22294](https://github.com/arendst/Tasmota/issues/22294)
 - Support for MS5837 pressure and temperature sensor [#22376](https://github.com/arendst/Tasmota/issues/22376)
 - Support for TM1640 based IoTTimer by Stefan Oskamp [#21376](https://github.com/arendst/Tasmota/issues/21376)
+- Support for Sonoff POWCT Energy Export Active [#22596](https://github.com/arendst/Tasmota/issues/22596)
 - HLK-LD2410 Engineering mode [#21880](https://github.com/arendst/Tasmota/issues/21880)
 - Mitsubishi Electric HVAC Operation time for MiElHVAC [#22334](https://github.com/arendst/Tasmota/issues/22334)
 - Mitsubishi Electric HVAC Outdoor Temperature for MiElHVAC [#22345](https://github.com/arendst/Tasmota/issues/22345)
@@ -140,6 +141,7 @@ The latter links can be used for OTA upgrades too like ``OtaUrl https://ota.tasm
 - Mitsubishi Electric HVAC Auto Clear Remote Temp for MiElHVAC [#22370](https://github.com/arendst/Tasmota/issues/22370)
 - SolaxX1 Meter mode [#22330](https://github.com/arendst/Tasmota/issues/22330)
 - Show Active Power Total with any multi-phase energy monitoring [#22579](https://github.com/arendst/Tasmota/issues/22579)
+- ESP32 support for WPA2/3 Enterprise conditional in core v3.1.0.241206 [#22600](https://github.com/arendst/Tasmota/issues/22600)
 - ESP32 ULP lp_core to Berry ULP module (#22567)[#22567](https://github.com/arendst/Tasmota/issues/22567)
 - ESP32 new BLE filters by name and minimum RSSI [#22530](https://github.com/arendst/Tasmota/issues/22530)
 - ESP32 Hybrid compile take custom boards settings in account [#22542](https://github.com/arendst/Tasmota/issues/22542)
@@ -153,10 +155,11 @@ The latter links can be used for OTA upgrades too like ``OtaUrl https://ota.tasm
 - ESP32 ArtNet switches from GRB to RGB encoding [#22556](https://github.com/arendst/Tasmota/issues/22556)
 
 ### Changed
-- ESP32 Platform from 2024.09.30 to 2024.11.31, Framework (Arduino Core) from v3.1.0.240926 to v3.1.0.241117 and IDF to 5.3.1.241024 [#22504](https://github.com/arendst/Tasmota/issues/22504)
+- ESP32 Platform from 2024.09.30 to 2024.12.30, Framework (Arduino Core) from v3.1.0.240926 to v3.1.0.241206 and IDF to 5.3.2 [#22600](https://github.com/arendst/Tasmota/issues/22600)
 - ESP32 LVGL library from v9.2.0 to v9.2.2 [#22385](https://github.com/arendst/Tasmota/issues/22385)
 - ESP32 replaced NeoPixelBus with TasmotaLED [#22556](https://github.com/arendst/Tasmota/issues/22556)
 - Redesign GUI adding feedback to buttons, shutters and lights
+- Add GUI submenu headers and refresh configuration button text (#22592)
 - Use command `WebButton1` to change GUI shutter 1 name
 - Unit (k)VAr(h) to (k)var(h) [#22435](https://github.com/arendst/Tasmota/issues/22435)
 - AHT1X/AHT2X/AHT3X ready for virtual I2C [#22427](https://github.com/arendst/Tasmota/issues/22427)
